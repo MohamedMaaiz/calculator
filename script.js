@@ -12,38 +12,76 @@ clearBTN.onclick = () => clearScreen();
 //current values
 let currentNumber = 0; //the number on the screen
 let firstNumber = 0; //first number to be used
+let firstNumExitst = false;
 let secondNumber = 0; //secont number to be used
 let result = 0; //store the result
 let resultExist = false; //to check for result 
 let usedOperator = ''; //user selected operator
 
+//calculations
+let add = (num1, num2) => num1 + num2;
+let subtract = (num1, num2) => num1 - num2;
+let multiply = (num1, num2) => num1 * num2;
+let divide = (num1, num2) => num1 / num2;
+
 numberBTN.forEach(button => {
     button.addEventListener('click', () => {
-        updateUserValue(button.innerHTML);
+        updateDisplayValue(button.innerHTML);
     })
 });
 
 operatorBTN.forEach(button => {
     button.addEventListener('click', () => {
-        usedOperator = button.innerHTML;
-        if (resultExist == true) {
-            firstNumber = result;
-        } else {
-            firstNumber = currentNumber;
-        }
-        let symbolWithSpaces = ` ${button.innerHTML} `
-        updateUserValue(symbolWithSpaces);
+        usedOperator = button.innerHTML; 
+        resultExist == true ? firstNumber = result : firstNumber = currentNumber;
+        updateDisplayValue(` ${button.innerHTML} `);
+        firstNumExitst = true;
     })
 });
 
+//update user display value with button press
+function updateDisplayValue(buttonPressed) {
+    resultExist == true ? currentNumber = result : currentNumber = numberDisplay.textContent;
+
+    currentNumber = numberDisplay.textContent = currentNumber + buttonPressed;
+    
+    if (firstNumExitst == true) calculate();
+}
+
 function calculate() {
+    getSecondNumber()
+    operatorSelection();
+    resultExist = true;
+    console.log('first '+firstNumber)
+}
+
+function getSecondNumber() {
     let splited = currentNumber.toString().split(' ');
     secondNumber = splited.pop();
-    operatorSelection();
+    console.log('second '+secondNumber)
+    if (secondNumber === '') {
+        return console.log('no second')
+    }
+}
+
+function displayResult(solution) {
+    resultDisplay.textContent = solution;
+    result = solution;
+}
+
+function clearScreen() {
+    currentNumber = 0;
+    firstNumber = 0;
+    secondNumber = 0;
+    usedOperator = '';
+    result = 0;
+    resultExist = false;
+    numberDisplay.textContent = '';
+    resultDisplay.textContent = '';
 }
 
 function operatorSelection() {
-    
+
     switch (usedOperator) {
         case '+':
             displayResult(add(parseInt(firstNumber), parseInt(secondNumber)));
@@ -60,39 +98,5 @@ function operatorSelection() {
         default:
             break;
     }
+    firstNumExitst = false;
 };
-
-function displayResult(solution) {
-    resultDisplay.textContent = solution;
-    result = solution;
-    resultExist = true;
-}
-
-//calculations
-let add = (num1, num2) => num1 + num2;
-let subtract = (num1, num2) => num1 - num2;
-let multiply = (num1, num2) => num1 * num2;
-let divide = (num1, num2) => num1 / num2;
-
-//update user display value with button press
-function updateUserValue(newValue) {
-    // if (resultExist == true) {
-    //     let currentValue = result;
-    //     currentNumber =
-    //     console.log(result)
-    //     return;
-    // }
-    let currentValue = numberDisplay.textContent;
-    currentNumber = numberDisplay.textContent = currentValue + newValue;
-}
-
-function clearScreen() {
-    currentNumber = 0;
-    firstNumber = 0;
-    secondNumber = 0;
-    usedOperator = '';
-    result = 0;
-    resultExist = false;
-    numberDisplay.textContent = '';
-    resultDisplay.textContent = '';
-}
