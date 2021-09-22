@@ -36,19 +36,32 @@ operatorBTN.forEach(button => {
         resultExist == true ? firstNumber = result : firstNumber = currentNumber;
         updateDisplayValue(` ${button.innerHTML} `);
         firstNumExitst = true;
+
+    
+    console.log('first +'+firstNumber)
+
     })
 });
 
 //update user display value with button press
 function updateDisplayValue(buttonPressed) {
-    resultExist == true ? currentNumber = result : currentNumber = numberDisplay.textContent;
 
+    if (resultExist == true) {
+        currentNumber = result;
+        resultExist = false;
+    } else {
+        currentNumber = numberDisplay.textContent;
+    }
+
+    console.log('current '+currentNumber)
+    
     currentNumber = numberDisplay.textContent = currentNumber + buttonPressed;
     
     if (firstNumExitst == true) calculate();
 }
 
 function calculate() {
+    
     getSecondNumber()
     operatorSelection();
     resultExist = true;
@@ -57,9 +70,12 @@ function calculate() {
 
 function getSecondNumber() {
     let splited = currentNumber.toString().split(' ');
+    console.log(splited)
     secondNumber = splited.pop();
+    
     console.log('second '+secondNumber)
     if (secondNumber === '') {
+        
         return console.log('no second')
     }
 }
