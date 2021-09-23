@@ -14,21 +14,22 @@ clearBTN.onclick = () => clearScreen();
 pointBTN.onclick = () => addPoint();
 backBTN.onclick = () => backspace();
 
-//current values
-let currentNumber = ''; //the number on the screen
-let firstNumber = ''; //first number to be used
+let currentNumber = '';
+let firstNumber = '';
 let firstNumExitst = false;
-let secondNumber = ''; //secont number to be used
-let result = ''; //store the result
-let resultExist = false; //to check for result 
-let usedOperator = ''; //user selected operator
+let secondNumber = ''; 
+let result = ''; 
+let resultExist = false; 
+let usedOperator = '';
 
 function keyPress(e) {
     if (e.key >= 0 && e.key <= 9) numberUpdate(e.key);
     if (e.key === '.') addPoint();
-    if (e.key === 'Backspace') backBTN();
+    if (e.key === 'Backspace') backspace();
     if (e.key === 'Escape') clearScreen();
-    if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/')
+    if (e.key === '+' || e.key === '-') operatorUpdate(e.key);
+    if (e.key === '*') operatorUpdate('x');
+    if (e.key === '/') operatorUpdate('÷');
 }
 
 numberBTN.forEach(button => {
@@ -46,13 +47,14 @@ function numberUpdate(number) {
 }
 
 function addPoint() {
-    currentNumber === '' ? numberUpdate('0.') : false
+    currentNumber === '' ? numberUpdate('0') : false
     if (!firstNumExitst && currentNumber.includes('.')) return;
     if (firstNumExitst) {
         getSecondNumber();
-        if (secondNumber === '') numberUpdate('0.');
+        if (secondNumber === '') numberUpdate('0');
         if (secondNumber.includes('.')) return;
     }
+    numberUpdate('.')
 }
 
 function operatorUpdate(operator) {
@@ -108,7 +110,6 @@ function clearScreen() {
     resultDisplay.textContent = '';
 }
 
-//update user display value with button press
 function updateDisplayValue(buttonPressed,type) {
     let lastValue = numberDisplay.textContent;
     if (resultExist == true && type === 'symbol') lastValue = result;
@@ -127,12 +128,9 @@ let a = Number(firstNumber),b = Number(secondNumber);
             return displayResult(multiply(a, b));
         case '÷':
             return displayResult(divide(a, b));
-        default:
-            break;
     }
 };
 
-//calculations
 let add = (a, b) => a + b;
 let subtract = (a, b) => a - b;
 let multiply = (a, b) => a * b;
