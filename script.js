@@ -1,13 +1,18 @@
 //selectors
-const numberBTN = document.querySelectorAll('[data-Number]');
+const numberBTN = document.querySelectorAll('[data-number]');
 const operatorBTN = document.querySelectorAll('[data-operator]');
+const pointBTN = document.querySelector('[data-point]');
 const equalsBTN = document.querySelector('[data-equals]');
+const backBTN = document.querySelector('[data-back]');
 const clearBTN = document.querySelector('[data-clear]');
 const numberDisplay = document.getElementById('user-value');
 const resultDisplay = document.getElementById('result');
 
+window.addEventListener('keyup', keyPress);
 equalsBTN.onclick = () => calculate();
 clearBTN.onclick = () => clearScreen();
+pointBTN.onclick = () => addPoint();
+backBTN.onclick = () => backspace();
 
 //current values
 let currentNumber = ''; //the number on the screen
@@ -17,6 +22,14 @@ let secondNumber = ''; //secont number to be used
 let result = ''; //store the result
 let resultExist = false; //to check for result 
 let usedOperator = ''; //user selected operator
+
+function keyPress(e) {
+    if (e.key >= 0 && e.key <= 9) numberUpdate(e.key);
+    if (e.key === '.') addPoint();
+    if (e.key === 'Backspace') backBTN();
+    if (e.key === 'Escape') clearScreen();
+    if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/')
+}
 
 numberBTN.forEach(button => {
     button.addEventListener('click', () => {numberUpdate(button.textContent)});
@@ -32,12 +45,38 @@ function numberUpdate(number) {
     if (firstNumExitst == true) calculate();
 }
 
+function addPoint() {
+    currentNumber === '' ? numberUpdate('0.') : false
+    if (!firstNumExitst && currentNumber.includes('.')) return;
+    if (firstNumExitst) {
+        getSecondNumber();
+        if (secondNumber === '') numberUpdate('0.');
+        if (secondNumber.includes('.')) return;
+    }
+}
+
 function operatorUpdate(operator) {
+    if (numberDisplay.textContent.slice(-1) === ' '){
+        currentNumber = numberDisplay.textContent = numberDisplay.textContent.slice(0,-3)
+    }
     usedOperator = operator;
     resultExist == true ? firstNumber = result : firstNumber = currentNumber;
     firstNumExitst = true;
     let type = 'symbol';
     updateDisplayValue(` ${operator} `,type);
+}
+
+function backspace() {
+    let sliced = numberDisplay.textContent.slice(-1);
+    if (sliced === ' ') {
+        currentNumber = numberDisplay.textContent = numberDisplay.textContent.slice(0, -3);
+        firstNumExitst = false;
+        resultDisplay.textContent = '';
+        resultExist = false;
+    } else {
+        currentNumber = numberDisplay.textContent = numberDisplay.textContent.slice(0, -1);
+    }
+    if (firstNumExitst) calculate();
 }
 
 function calculate() {
