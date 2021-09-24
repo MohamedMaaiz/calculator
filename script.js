@@ -5,7 +5,7 @@ const pointBTN = document.querySelector('[data-point]');
 const equalsBTN = document.querySelector('[data-equals]');
 const backBTN = document.querySelector('[data-back]');
 const clearBTN = document.querySelector('[data-clear]');
-const numberDisplay = document.getElementById('user-value');
+const display = document.getElementById('user-value');
 const resultDisplay = document.getElementById('result');
 
 window.addEventListener('keyup', keyPress);
@@ -14,7 +14,6 @@ clearBTN.onclick = () => clearScreen();
 pointBTN.onclick = () => addPoint();
 backBTN.onclick = () => backspace();
 
-let currentNumber = '';
 let firstNumber = '';
 let firstNumExitst = false;
 let secondNumber = ''; 
@@ -41,14 +40,14 @@ operatorBTN.forEach(button => {
 })
 
 function numberUpdate(number) {
-    currentNumber += number;
-    updateDisplayValue(number);
+    display.textContent + number;
+    updateDisplay(number);
     if (firstNumExitst == true) calculate();
 }
 
 function addPoint() {
-    currentNumber === '' ? numberUpdate('0') : false
-    if (!firstNumExitst && currentNumber.includes('.')) return;
+    display.textContent === '' ? numberUpdate('0') : false
+    if (!firstNumExitst && display.textContent.includes('.')) return;
     if (firstNumExitst) {
         getSecondNumber();
         if (secondNumber === '') numberUpdate('0');
@@ -58,25 +57,25 @@ function addPoint() {
 }
 
 function operatorUpdate(operator) {
-    if (numberDisplay.textContent.slice(-1) === ' '){
-        currentNumber = numberDisplay.textContent = numberDisplay.textContent.slice(0,-3)
+    if (display.textContent.slice(-1) === ' '){
+        display.textContent = display.textContent.slice(0,-3)
     }
     usedOperator = operator;
-    resultExist == true ? firstNumber = result : firstNumber = currentNumber;
+    resultExist == true ? firstNumber = result : firstNumber = display.textContent;
     firstNumExitst = true;
     let type = 'symbol';
-    updateDisplayValue(` ${operator} `,type);
+    updateDisplay(` ${operator} `,type);
 }
 
 function backspace() {
-    let sliced = numberDisplay.textContent.slice(-1);
+    let sliced = display.textContent.slice(-1);
     if (sliced === ' ') {
-        currentNumber = numberDisplay.textContent = numberDisplay.textContent.slice(0, -3);
+        display.textContent = display.textContent.slice(0, -3);
         firstNumExitst = false;
         resultDisplay.textContent = '';
         resultExist = false;
     } else {
-        currentNumber = numberDisplay.textContent = numberDisplay.textContent.slice(0, -1);
+        display.textContent = display.textContent.slice(0, -1);
     }
     if (firstNumExitst) calculate();
 }
@@ -88,33 +87,30 @@ function calculate() {
 }
 
 function getSecondNumber() {
-    let splited = currentNumber.toString().split(' ');
+    let splited = display.textContent.toString().split(' ');
     secondNumber = splited.pop();
 }
 
 function displayResult(solution) {
     solution = Math.round(solution * 1000) / 1000;
-    resultDisplay.textContent = solution;
-    result = solution;
+    result = resultDisplay.textContent = solution;
 }
 
 function clearScreen() {
-    currentNumber = '';
     firstNumber = '';
     firstNumExitst = false
     secondNumber = '';
     usedOperator = '';
     result = '';
     resultExist = false;
-    numberDisplay.textContent = '';
+    display.textContent = '';
     resultDisplay.textContent = '';
 }
 
-function updateDisplayValue(buttonPressed,type) {
-    let lastValue = numberDisplay.textContent;
+function updateDisplay(buttonPressed,type) {
+    let lastValue = display.textContent;
     if (resultExist == true && type === 'symbol') lastValue = result;
-    currentNumber = lastValue + buttonPressed
-    numberDisplay.textContent = currentNumber
+    display.textContent = lastValue + buttonPressed
 }
 
 function operatorSelection() {

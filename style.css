@@ -1,0 +1,12 @@
+html {
+    background-color: #e0e5ec;
+    align-items: center;
+}
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 5px solid black;
+    border-radius: 25px;
+    height: 600px;
+}
