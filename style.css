@@ -1,12 +1,111 @@
-html {
-    background-color: #e0e5ec;
-    align-items: center;
+@import url("https://fonts.googleapis.com/css2?family=Gemunu+Libre&display=swap");
+
+* {
+  font-family: "Gemunu Libre", sans-serif;
 }
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 5px solid black;
-    border-radius: 25px;
-    height: 600px;
+
+.preload * {
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -ms-transition: none !important;
+  -o-transition: none !important;
+}
+
+html {
+  background-color: #e0e5ec;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.calculator {
+  display: flex;
+  flex-direction: column;
+  box-shadow: 5px 3px 13px 2px #c6c6c6, -5px -3px 13px 2px #cdcdcd;
+  border-radius: 25px;
+  min-height: 580px;
+  width: 400px;
+}
+
+#display {
+  text-align: right;
+  background-color: #e0e0e066;
+  color: #303030;
+  border-radius: 24px;
+  margin: 30px 20px 10px 20px;
+  padding: 14px 20px;
+  box-shadow: inset 3px 3px 13px 0px #dadada, inset -3px -3px 13px 0px #d6d6d6;
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+#user-value {
+  font-size: 40px;
+  min-height: 45px;
+}
+
+#result {
+  font-size: 60px;
+  min-height: 68px;
+}
+
+.numberKeys {
+  display: flex;
+  flex-wrap: wrap;
+  height: 380px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+button {
+  background-color: #e0e5ec;
+  color: #484848;
+  font-size: 40px;
+  border-radius: 15px;
+  margin: 6px;
+  height: 60px;
+  width: 80px;
+  border: none;
+  box-shadow: 2px 4px 5px 0px #b2b2b299, 0px -1px 7px 2px #f4f4f4;
+  transition: 0.3s 0s;
+}
+
+[data-back] div {
+  letter-spacing: -5px;
+  transform: scaleY(0.8);
+}
+
+button:active {
+  background-color: #484848;
+  color: #e0e5ec;
+  transition: 0s;
+}
+
+button:last-child {
+  font-size: 60px;
+  height: 135px;
+}
+
+.numberKeys :nth-child(15),
+:nth-child(17),
+:nth-child(18) {
+  font-size: 50px;
+}
+
+footer {
+  bottom: 0;
+  position: fixed;
+}
+
+body .diveloper p,
+a {
+  justify-content: center;
+  color: #484848;
+  display: flex;
+  gap: 6px;
+  text-decoration: none;
+  font-size: 22px;
 }

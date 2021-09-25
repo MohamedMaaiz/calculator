@@ -1,4 +1,3 @@
-//selectors
 const numberBTN = document.querySelectorAll('[data-number]');
 const operatorBTN = document.querySelectorAll('[data-operator]');
 const pointBTN = document.querySelector('[data-point]');
@@ -8,8 +7,8 @@ const clearBTN = document.querySelector('[data-clear]');
 const display = document.getElementById('user-value');
 const resultDisplay = document.getElementById('result');
 
+window.onload = () => document.body.classList.remove("preload");
 window.addEventListener('keyup', keyPress);
-equalsBTN.onclick = () => calculate();
 clearBTN.onclick = () => clearScreen();
 pointBTN.onclick = () => addPoint();
 backBTN.onclick = () => backspace();
@@ -26,8 +25,8 @@ function keyPress(e) {
     if (e.key === '.') addPoint();
     if (e.key === 'Backspace') backspace();
     if (e.key === 'Escape') clearScreen();
-    if (e.key === '+' || e.key === '-') operatorUpdate(e.key);
-    if (e.key === '*') operatorUpdate('x');
+    if (e.key === '+' || e.key === '-' || e.key === '%' || e.key === '^') operatorUpdate(e.key);
+    if (e.key === '*') operatorUpdate('×');
     if (e.key === '/') operatorUpdate('÷');
 }
 
@@ -93,7 +92,8 @@ function getSecondNumber() {
 
 function displayResult(solution) {
     solution = Math.round(solution * 1000) / 1000;
-    result = resultDisplay.textContent = solution;
+    resultDisplay.textContent = solution.toLocaleString();
+    result = solution;
 }
 
 function clearScreen() {
@@ -107,27 +107,26 @@ function clearScreen() {
     resultDisplay.textContent = '';
 }
 
+function operatorSelection() {
+let a = Number(firstNumber),b = Number(secondNumber);
+    switch (usedOperator) {
+        case '+':
+            return displayResult(a + b);
+        case '-':
+            return displayResult(a - b);
+        case '×':
+            return displayResult(a * b);
+        case '÷':
+            return displayResult(b === 0 ? false : a / b);
+        case '%':
+            return displayResult((a / 100) * b);
+        case '^':
+            return displayResult(Math.pow(a, b));
+    }
+};
+
 function updateDisplay(buttonPressed,type) {
     let lastValue = display.textContent;
     if (resultExist == true && type === 'symbol') lastValue = result;
     display.textContent = lastValue + buttonPressed
 }
-
-function operatorSelection() {
-let a = Number(firstNumber),b = Number(secondNumber);
-    switch (usedOperator) {
-        case '+':
-            return displayResult(add(a, b));
-        case '-':
-            return displayResult(subtract(a, b));
-        case 'x':
-            return displayResult(multiply(a, b));
-        case '÷':
-            return displayResult(divide(a, b));
-    }
-};
-
-let add = (a, b) => a + b;
-let subtract = (a, b) => a - b;
-let multiply = (a, b) => a * b;
-let divide = (a, b) => b === 0 ? false : a / b;
