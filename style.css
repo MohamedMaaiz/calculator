@@ -19,6 +19,11 @@ html {
   align-items: center;
 }
 
+body {
+  display: flex;
+  justify-content: center;
+}
+
 .calculator {
   display: flex;
   flex-direction: column;
@@ -73,9 +78,16 @@ button {
   transition: 0.3s 0s;
 }
 
-[data-back] div {
-  letter-spacing: -5px;
-  transform: scaleY(0.8);
+button:hover {
+  background-color: #d3d3d3;
+}
+
+[data-clear]:hover, [data-back]:hover{
+  background-color: #e4cfcf;
+}
+
+[data-operator]:hover {
+  background-color: #c8e0ca;
 }
 
 button:active {
@@ -98,14 +110,14 @@ button:last-child {
 footer {
   bottom: 0;
   position: fixed;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 22px;
+  color: #707070;
 }
 
-body .diveloper p,
-a {
-  justify-content: center;
-  color: #484848;
-  display: flex;
-  gap: 6px;
+a{
   text-decoration: none;
-  font-size: 22px;
+  color: #484848;
 }
