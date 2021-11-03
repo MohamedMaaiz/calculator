@@ -13,3 +13,5 @@ Check the website: [Live preview](https://mohamedmaaiz.github.io/calculator/)
 - Can calculate the power of and percentage a given number.
 - Supports deleting/clearing a single input (backspace) and can clear the whole display with one click.
 - Keyboard inputs are supported for all the buttons provided.
+- Build in dark and light theme
+- Selected theme will be saved inside the browsers local data
